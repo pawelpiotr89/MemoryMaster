@@ -18,17 +18,16 @@ public class Ramka extends JFrame {
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
+    Image image1 = tk.getImage("src\\MemoryMasterPakiet\\kursor1.png");
+	Image image2 = tk.getImage("src\\MemoryMasterPakiet\\kursor2.png");
+	
     final private int szerokoscRamki = screenSize.width;
     final private int wysokoscRamki = screenSize.height;
     final private double odstepRamkiDouble = szerokoscRamki/6;
     final private int odstepRamkiInteger = (int) odstepRamkiDouble;
     final private double odstepPrzyciskuDouble = szerokoscRamki/40;
     final private int odstepPrzyciskuInteger = (int) odstepPrzyciskuDouble;
-    
-    Toolkit toolkit = Toolkit.getDefaultToolkit();
-	Image image1 = toolkit.getImage("src\\MemoryMasterPakiet\\kursor1.png");
-	Image image2 = toolkit.getImage("src\\MemoryMasterPakiet\\kursor2.png");
-    
+  
     PrzyciskStart przyciskStart = new PrzyciskStart();
 	PrzyciskExit przyciskExit = new PrzyciskExit();
 	PanelMenu panelMenu = new PanelMenu();
@@ -108,12 +107,12 @@ public class Ramka extends JFrame {
 	}
 	
 	public void tworzenieKursora(){
-		Cursor a = toolkit.createCustomCursor(image1 , new Point(getX(),getY()), "");
+		Cursor a = tk.createCustomCursor(image1 , new Point(getX(),getY()), "");
     	setCursor (a);
 	}
 	
 	public void nacisniecieKursora(){
-    	Cursor a = toolkit.createCustomCursor(image2 , new Point(getX(),getY()), "");
+    	Cursor a = tk.createCustomCursor(image2 , new Point(getX(),getY()), "");
     	setCursor (a);
 	}
 }
