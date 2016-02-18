@@ -36,7 +36,7 @@ public abstract class Przycisk extends JButton {
 		setContentAreaFilled(false);
 		setFont(new Font("Tahoma", Font.BOLD, rozmiarCzcionkiInteger));
 		setBackground(Color.WHITE);
-		setForeground(new Color(0,0,0));
+		setForeground(new Color(0, 0, 0));
 		setPreferredSize(new Dimension(szerokoscPrzyciskuInteger,wysokoscPrzyciskuInteger));
 		
 		addMouseListener(new MouseAdapter(){
@@ -58,11 +58,11 @@ public abstract class Przycisk extends JButton {
 	}
 	
 	public void ustawienieTekstuNaNiebiesko(){
-		setForeground(new Color(0,148,255));
+		setForeground(new Color(0, 148, 255));
 	}
 	
 	public void ustawienieTekstuNaCzarno(){
-		setForeground(new Color(0,0,0));
+		setForeground(new Color(0, 0, 0));
 	}
 	
 	public void tworzenieKursora(){

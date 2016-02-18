@@ -1,5 +1,6 @@
 package MemoryMasterPakiet;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -10,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.Box;
 import javax.swing.JFrame;
 
@@ -32,6 +32,8 @@ public class Ramka extends JFrame {
 	PrzyciskExit przyciskExit = new PrzyciskExit();
 	PanelMenu panelMenu = new PanelMenu();
 	PanelGry panelGry = new PanelGry();
+	PanelKart panelKart = new PanelKart();
+	PanelPunktow panelPunktow = new PanelPunktow();
 	
 	public Ramka(){
 		setPreferredSize(new Dimension(szerokoscRamki, wysokoscRamki));
@@ -40,13 +42,16 @@ public class Ramka extends JFrame {
 		setTitle("Memory_Master");
 		setUndecorated(true);
 		
-		add(panelMenu);
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 		przyciskStart.setAlignmentX(PanelMenu.CENTER_ALIGNMENT);
 		panelMenu.add(przyciskStart);
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
 		przyciskExit.setAlignmentX(PanelMenu.CENTER_ALIGNMENT);
 		panelMenu.add(przyciskExit);
+		panelGry.setLayout(new BorderLayout(0,2));
+		panelGry.add(panelKart, BorderLayout.WEST);
+		panelGry.add(panelPunktow, BorderLayout.EAST);
+		add(panelMenu);
 		
 		addMouseListener(new MouseAdapter(){
 	        
