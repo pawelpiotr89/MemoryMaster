@@ -1,8 +1,12 @@
 package MemoryMasterPakiet;
 
+import java.awt.Color;
+
 public class PrzyciskStart extends Przycisk {
 	
-	PrzyciskStart(){
+	public PrzyciskStart(){
 		setText("START_MEMORY_MASTER");
+		setBackground(Color.WHITE);
+		setContentAreaFilled(false);
 	}
 }

@@ -1,9 +1,13 @@
 package MemoryMasterPakiet;
 
+import java.awt.Color;
+
 public class PrzyciskExit extends Przycisk{
 	
-	PrzyciskExit(){
+	public PrzyciskExit(){
 		setText("EXIT_MEMORY_MASTER");
+		setBackground(Color.WHITE);
+		setContentAreaFilled(false);
 	}
 
 }

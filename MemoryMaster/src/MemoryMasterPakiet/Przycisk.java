@@ -21,22 +21,19 @@ public abstract class Przycisk extends JButton {
 	
     final private int szerokoscEkranu = screenSize.width;
     final private int wysokoscEkranu = screenSize.height;
-    final private double szerokoscPrzyciskuDouble = wysokoscEkranu/50;
-    final private double wysokoscPrzyciskuDouble = szerokoscEkranu/100;
+    final private double szerokoscPrzyciskuDouble = szerokoscEkranu / 100;
+    final private double wysokoscPrzyciskuDouble = wysokoscEkranu / 10;
     final private int szerokoscPrzyciskuInteger = (int) szerokoscPrzyciskuDouble;
     final private int wysokoscPrzyciskuInteger = (int) wysokoscPrzyciskuDouble;
-    final private double rozmiarCzcionkiDouble = szerokoscEkranu/100;
-    final private int rozmiarCzcionkiInteger = (int) rozmiarCzcionkiDouble;
+    final private int rozmiarCzcionkiInteger = (int) szerokoscPrzyciskuDouble;
 	
 	public Przycisk(){
 		setOpaque(true);
 		setBorderPainted(false);
 		setEnabled(true);
 		setFocusPainted(false);
-		setContentAreaFilled(false);
+		setForeground(Color.BLACK);
 		setFont(new Font("Tahoma", Font.BOLD, rozmiarCzcionkiInteger));
-		setBackground(Color.WHITE);
-		setForeground(new Color(0, 0, 0));
 		setPreferredSize(new Dimension(szerokoscPrzyciskuInteger,wysokoscPrzyciskuInteger));
 		
 		addMouseListener(new MouseAdapter(){
@@ -52,9 +49,16 @@ public abstract class Przycisk extends JButton {
             
             @Override
 	        public void mousePressed(MouseEvent e){
-	        	nacisniecieKursora();  
+	        	nacisniecieKursora();
+	        	ustawienieTekstuNaCzarno();
 	        }
-        });
+      
+			@Override
+			public void mouseReleased(MouseEvent e){
+				tworzenieKursora();
+				ustawienieTekstuNaCzarno();
+			}
+		});
 	}
 	
 	public void ustawienieTekstuNaNiebiesko(){

@@ -16,7 +16,7 @@ public class PanelPunktow extends JPanel{
     final private double szerokoscPaneluPunktowDouble = szerokoscRamki * 0.2;
     final private int szerokoscPaneluPunktowInteger = (int) szerokoscPaneluPunktowDouble;
 	
-	PanelPunktow(){
+	public PanelPunktow(){
 		setPreferredSize(new Dimension(szerokoscPaneluPunktowInteger, wysokoscRamki));
 		setBackground(new Color(0, 148, 255));
 	}

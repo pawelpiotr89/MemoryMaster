@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 public class Ramka extends JFrame {
@@ -30,6 +31,8 @@ public class Ramka extends JFrame {
   
     PrzyciskStart przyciskStart = new PrzyciskStart();
 	PrzyciskExit przyciskExit = new PrzyciskExit();
+	PrzyciskMenu przyciskMenu = new PrzyciskMenu();
+	PrzyciskMieszanie przyciskMieszanie = new PrzyciskMieszanie();
 	PanelMenu panelMenu = new PanelMenu();
 	PanelGry panelGry = new PanelGry();
 	PanelKart panelKart = new PanelKart();
@@ -48,6 +51,11 @@ public class Ramka extends JFrame {
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
 		przyciskExit.setAlignmentX(PanelMenu.CENTER_ALIGNMENT);
 		panelMenu.add(przyciskExit);
+		
+		panelPunktow.setLayout(new BorderLayout());
+		panelPunktow.add(przyciskMenu, BorderLayout.PAGE_START);
+		panelPunktow.add(przyciskMieszanie, BorderLayout.PAGE_END);
+		
 		panelGry.setLayout(new BorderLayout(0,2));
 		panelGry.add(panelKart, BorderLayout.WEST);
 		panelGry.add(panelPunktow, BorderLayout.EAST);
@@ -81,9 +89,15 @@ public class Ramka extends JFrame {
 		     public void actionPerformed(ActionEvent e){
 		    	 exitMemoryMaster();
 		     }
-		});  
+		});
 		
-		getContentPane().setBackground(Color.WHITE);
+		przyciskMenu.addActionListener(new ActionListener(){
+		     public void actionPerformed(ActionEvent e){
+		    	 powrotDoMenu();
+		     }
+		});
+		
+		getContentPane();
 		pack();
 		setVisible(true);	
 	}
@@ -108,16 +122,35 @@ public class Ramka extends JFrame {
 		rewalidacja();
 		odmalowanie();
 	}
+	
+	public void powrotDoMenu(){
+		usunieciePaneluGry();
+		dodaniePaneluMenu();
+		rewalidacja();
+		odmalowanie();
+	}
+	
 		public void usunieciePaneluMenu(){
-		remove(panelMenu);
+			remove(panelMenu);
 		}
+		
 		public void dodaniePaneluGry(){
-		add(panelGry);
+			add(panelGry);
 		}
+		
+		public void usunieciePaneluGry(){
+			remove(panelGry);
+		}
+		
+		public void dodaniePaneluMenu(){
+			add(panelMenu);
+		}
+		
 		public void rewalidacja(){
-		revalidate();
+			revalidate();
 		}
+		
 		public void odmalowanie(){
-		repaint();
-		}
+			repaint();
+		}	
 }
