@@ -1,7 +1,6 @@
 package MemoryMasterPakiet;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -12,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 public class Ramka extends JFrame {
@@ -41,22 +39,19 @@ public class Ramka extends JFrame {
 	public Ramka(){
 		setPreferredSize(new Dimension(szerokoscRamki, wysokoscRamki));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		setAlwaysOnTop(true);
 		setTitle("Memory_Master");
 		setUndecorated(true);
 		
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
-		przyciskStart.setAlignmentX(PanelMenu.CENTER_ALIGNMENT);
 		panelMenu.add(przyciskStart);
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
-		przyciskExit.setAlignmentX(PanelMenu.CENTER_ALIGNMENT);
 		panelMenu.add(przyciskExit);
 		
-		panelPunktow.setLayout(new BorderLayout());
 		panelPunktow.add(przyciskMenu, BorderLayout.PAGE_START);
 		panelPunktow.add(przyciskMieszanie, BorderLayout.PAGE_END);
-		
-		panelGry.setLayout(new BorderLayout(0,2));
+	
 		panelGry.add(panelKart, BorderLayout.WEST);
 		panelGry.add(panelPunktow, BorderLayout.EAST);
 		add(panelMenu);
@@ -119,15 +114,13 @@ public class Ramka extends JFrame {
 	public void startMemoryMaster(){
 		usunieciePaneluMenu();
 		dodaniePaneluGry();
-		rewalidacja();
-		odmalowanie();
+		czyszczeniePanelu();
 	}
 	
 	public void powrotDoMenu(){
 		usunieciePaneluGry();
 		dodaniePaneluMenu();
-		rewalidacja();
-		odmalowanie();
+		czyszczeniePanelu();
 	}
 	
 		public void usunieciePaneluMenu(){
@@ -146,11 +139,8 @@ public class Ramka extends JFrame {
 			add(panelMenu);
 		}
 		
-		public void rewalidacja(){
+		public void czyszczeniePanelu(){
 			revalidate();
+			repaint();	
 		}
-		
-		public void odmalowanie(){
-			repaint();
-		}	
 }

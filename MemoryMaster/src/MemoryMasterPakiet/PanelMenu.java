@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 public class PanelMenu extends JPanel {
     
 	public PanelMenu(){
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(Color.WHITE);
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));	
 	}
 }

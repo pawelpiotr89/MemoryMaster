@@ -8,5 +8,6 @@ public class PrzyciskStart extends Przycisk {
 		setText("START_MEMORY_MASTER");
 		setBackground(Color.WHITE);
 		setContentAreaFilled(false);
+		setAlignmentX(PanelMenu.CENTER_ALIGNMENT);
 	}
 }

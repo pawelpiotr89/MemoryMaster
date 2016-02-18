@@ -8,6 +8,7 @@ public class PrzyciskExit extends Przycisk{
 		setText("EXIT_MEMORY_MASTER");
 		setBackground(Color.WHITE);
 		setContentAreaFilled(false);
+		setAlignmentX(PanelMenu.CENTER_ALIGNMENT);
 	}
 
 }

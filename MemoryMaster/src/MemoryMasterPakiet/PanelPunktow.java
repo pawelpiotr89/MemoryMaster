@@ -1,5 +1,6 @@
 package MemoryMasterPakiet;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -18,6 +19,7 @@ public class PanelPunktow extends JPanel{
 	
 	public PanelPunktow(){
 		setPreferredSize(new Dimension(szerokoscPaneluPunktowInteger, wysokoscRamki));
+		setLayout(new BorderLayout());
 		setBackground(new Color(0, 148, 255));
 	}
 }
