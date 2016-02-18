@@ -1,8 +1,11 @@
 package MemoryMasterPakiet;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,6 +16,9 @@ public abstract class Przycisk extends JButton {
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
+    Image imagePalecPrzycisk = tk.getImage("src\\MemoryMasterPakiet\\kursor1.png");
+	Image imagePiescPrzycisk = tk.getImage("src\\MemoryMasterPakiet\\kursor2.png");
+	
     final private int szerokoscEkranu = screenSize.width;
     final private int wysokoscEkranu = screenSize.height;
     final private double szerokoscPrzyciskuDouble = wysokoscEkranu/50;
@@ -36,13 +42,36 @@ public abstract class Przycisk extends JButton {
 		addMouseListener(new MouseAdapter(){
 			@Override
             public void mouseEntered(MouseEvent e){
-                setForeground(new Color(0,148,255));   
+				ustawienieTekstuNaNiebiesko();
             }
             
             @Override
             public void mouseExited(MouseEvent e){ 
-                setForeground(new Color(0,0,0));  
+            	ustawienieTekstuNaCzarno();
             }
+            
+            @Override
+	        public void mousePressed(MouseEvent e){
+	        	nacisniecieKursora();  
+	        }
         });
-	}	
+	}
+	
+	public void ustawienieTekstuNaNiebiesko(){
+		setForeground(new Color(0,148,255));
+	}
+	
+	public void ustawienieTekstuNaCzarno(){
+		setForeground(new Color(0,0,0));
+	}
+	
+	public void tworzenieKursora(){
+		Cursor a = tk.createCustomCursor(imagePalecPrzycisk , new Point(), "");
+    	setCursor (a);
+	}
+	
+	public void nacisniecieKursora(){
+    	Cursor a = tk.createCustomCursor(imagePiescPrzycisk , new Point(), "");
+    	setCursor (a);
+	}
 }

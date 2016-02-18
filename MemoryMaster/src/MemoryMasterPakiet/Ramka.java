@@ -18,8 +18,8 @@ public class Ramka extends JFrame {
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
-    Image image1 = tk.getImage("src\\MemoryMasterPakiet\\kursor1.png");
-	Image image2 = tk.getImage("src\\MemoryMasterPakiet\\kursor2.png");
+    Image imagePalec = tk.getImage("src\\MemoryMasterPakiet\\kursor1.png");
+	Image imagePiesc = tk.getImage("src\\MemoryMasterPakiet\\kursor2.png");
 	
     final private int szerokoscRamki = screenSize.width;
     final private int wysokoscRamki = screenSize.height;
@@ -83,6 +83,20 @@ public class Ramka extends JFrame {
 		setVisible(true);	
 	}
 	
+	public void tworzenieKursora(){
+		Cursor a = tk.createCustomCursor(imagePalec , new Point(), "");
+    	setCursor (a);
+	}
+	
+	public void nacisniecieKursora(){
+    	Cursor a = tk.createCustomCursor(imagePiesc , new Point(), "");
+    	setCursor (a);
+	}
+	
+	public void exitMemoryMaster(){
+		System.exit(0);
+	}
+	
 	public void startMemoryMaster(){
 		usunieciePaneluMenu();
 		dodaniePaneluGry();
@@ -101,18 +115,4 @@ public class Ramka extends JFrame {
 		public void odmalowanie(){
 		repaint();
 		}
-	
-	public void exitMemoryMaster(){
-		System.exit(0);
-	}
-	
-	public void tworzenieKursora(){
-		Cursor a = tk.createCustomCursor(image1 , new Point(getX(),getY()), "");
-    	setCursor (a);
-	}
-	
-	public void nacisniecieKursora(){
-    	Cursor a = tk.createCustomCursor(image2 , new Point(getX(),getY()), "");
-    	setCursor (a);
-	}
 }
