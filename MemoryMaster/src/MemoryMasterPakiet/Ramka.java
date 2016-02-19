@@ -35,6 +35,7 @@ public class Ramka extends JFrame {
 	PanelGry panelGry = new PanelGry();
 	PanelKart panelKart = new PanelKart();
 	PanelPunktow panelPunktow = new PanelPunktow();
+	Stoper stoper = new Stoper();
 	
 	public Ramka(){
 		setPreferredSize(new Dimension(szerokoscRamki, wysokoscRamki));
@@ -49,8 +50,9 @@ public class Ramka extends JFrame {
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
 		panelMenu.add(przyciskExit);
 		
-		panelPunktow.add(przyciskMenu, BorderLayout.PAGE_START);
-		panelPunktow.add(przyciskMieszanie, BorderLayout.PAGE_END);
+		panelPunktow.add(przyciskMenu);
+		panelPunktow.add(stoper);
+		panelPunktow.add(przyciskMieszanie);
 	
 		panelGry.add(panelKart, BorderLayout.WEST);
 		panelGry.add(panelPunktow, BorderLayout.EAST);
@@ -88,7 +90,15 @@ public class Ramka extends JFrame {
 		
 		przyciskMenu.addActionListener(new ActionListener(){
 		     public void actionPerformed(ActionEvent e){
+		    	 sprawdzeniePrzycisku();
 		    	 powrotDoMenu();
+		     }
+		});
+		
+		przyciskMieszanie.addActionListener(new ActionListener(){
+		     public void actionPerformed(ActionEvent e){
+		    	 stoper.startCzas();
+		    	 przyciskMieszanie.zamorzeniePrzycisku();
 		     }
 		});
 		
@@ -142,5 +152,12 @@ public class Ramka extends JFrame {
 		public void czyszczeniePanelu(){
 			revalidate();
 			repaint();	
+		}
+		
+		public void sprawdzeniePrzycisku(){
+			if(stoper.sprawdzenieCzyDziala()){
+	    		 stoper.stopCzas();
+		    	 przyciskMieszanie.odmrorzeniePrzycisku();	 
+	    	 }
 		}
 }
