@@ -23,11 +23,11 @@ public class PrzyciskMieszanie extends Przycisk {
 			setMaximumSize(new Dimension(szerokoscPrzyciskuInteger, wysokoscPrzyciskuInteger));
 	}
 	    
-	    public void zamorzeniePrzycisku(){
+	    public void zamrozeniePrzycisku(){
 	    	setEnabled(false);
 	    }
 	    
-	    public void odmrorzeniePrzycisku(){
+	    public void odmrozeniePrzycisku(){
 	    	setEnabled(true);
 	    }
 }
