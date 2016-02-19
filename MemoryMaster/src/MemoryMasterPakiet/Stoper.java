@@ -24,8 +24,6 @@ public class Stoper extends JLabel{
     final private int wysokoscEtykietyCzasInteger = (int) wysokoscEtykietyCzasDouble;
     final private double rozmiarCzcionkiDouble = szerokoscRamki / 50;
     final private int rozmiarCzcionkiInteger = (int) rozmiarCzcionkiDouble;
-    
-    private String czas = "";
 	
 	Timer timer;
 	StopWatch stopWatch = new StopWatch();

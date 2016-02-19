@@ -50,9 +50,13 @@ public class Ramka extends JFrame {
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
 		panelMenu.add(przyciskExit);
 		
+		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 		panelPunktow.add(przyciskMenu);
+		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 		panelPunktow.add(stoper);
+		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 		panelPunktow.add(przyciskMieszanie);
+		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 	
 		panelGry.add(panelKart, BorderLayout.WEST);
 		panelGry.add(panelPunktow, BorderLayout.EAST);
