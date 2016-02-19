@@ -35,6 +35,7 @@ public class Ramka extends JFrame {
 	PanelGry panelGry = new PanelGry();
 	PanelKart panelKart = new PanelKart();
 	PanelPunktow panelPunktow = new PanelPunktow();
+	PustyPanel pustyPanel = new PustyPanel();
 	Stoper stoper = new Stoper();
 	
 	public Ramka(){
@@ -59,6 +60,7 @@ public class Ramka extends JFrame {
 		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 	
 		panelGry.add(panelKart, BorderLayout.WEST);
+		panelGry.add(pustyPanel, BorderLayout.CENTER);
 		panelGry.add(panelPunktow, BorderLayout.EAST);
 		add(panelMenu);
 		

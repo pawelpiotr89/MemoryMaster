@@ -13,16 +13,34 @@ public class PanelKart extends JPanel {
     
     final private int szerokoscRamki = screenSize.width;
     final private int wysokoscRamki = screenSize.height;
-    final private double szerokoscPaneluKartDouble = szerokoscRamki * 0.8;
+    final private double szerokoscPaneluKartDouble = szerokoscRamki * 0.79;
     final private int szerokoscPaneluKartInteger = (int) szerokoscPaneluKartDouble;
-    final private double odstepPionowyDouble = wysokoscRamki * 0.05;
+    final private double odstepPionowyDouble = wysokoscRamki * 0.005;
     final private int odstepPionowyInteger = (int) odstepPionowyDouble;
-    final private double odstepPoziomyDouble = szerokoscRamki * 0.05;
+    final private double odstepPoziomyDouble = szerokoscRamki * 0.005;
     final private int odstepPoziomyInteger = (int) odstepPoziomyDouble;
-	
+    
+    KartaPierwsza kartaPierwsza = new KartaPierwsza();
+    KartaDruga kartaDruga = new KartaDruga();
+    KartaTrzecia kartaTrzecia = new KartaTrzecia();
+    KartaCzwarta kartaCzwarta = new KartaCzwarta();
+    KartaPiata kartaPiata = new KartaPiata();
+	KartaSzosta kartaSzosta = new KartaSzosta();
+	KartaSiodma kartaSiodma = new KartaSiodma();
+	KartaOsma kartaOsma = new KartaOsma();
+    
 	public PanelKart(){
 		setPreferredSize(new Dimension(szerokoscPaneluKartInteger, wysokoscRamki));
-		setLayout(new GridLayout(8,6, odstepPoziomyInteger, odstepPionowyInteger));
+		setLayout(new GridLayout(6,8, odstepPoziomyInteger, odstepPionowyInteger));
 		setBackground(Color.WHITE);
+		
+		add(kartaPierwsza);
+		add(kartaDruga);
+		add(kartaTrzecia);
+		add(kartaCzwarta);
+		add(kartaPiata);
+		add(kartaSzosta);
+		add(kartaSiodma);
+		add(kartaOsma);
 	}
 }
