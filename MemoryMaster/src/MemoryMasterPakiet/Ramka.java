@@ -36,7 +36,13 @@ public class Ramka extends JFrame {
 	PanelKart panelKart = new PanelKart();
 	PanelPunktow panelPunktow = new PanelPunktow();
 	PustyPanel pustyPanel = new PustyPanel();
+	NapisCzas napisCzas = new NapisCzas();
 	Stoper stoper = new Stoper();
+	NapisKlikniecia napisKlikniecia = new NapisKlikniecia();
+	LicznikKlikniec licznikKlikniec = new LicznikKlikniec();
+	PustyLabel pustyLabel1 = new PustyLabel();
+	PustyLabel pustyLabel2 = new PustyLabel();
+	PustyLabel pustyLabel3 = new PustyLabel();
 	
 	public Ramka(){
 		setPreferredSize(new Dimension(szerokoscRamki, wysokoscRamki));
@@ -51,13 +57,15 @@ public class Ramka extends JFrame {
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
 		panelMenu.add(przyciskExit);
 		
-		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 		panelPunktow.add(przyciskMenu);
-		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
+		panelPunktow.add(napisCzas);
 		panelPunktow.add(stoper);
-		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
+		panelPunktow.add(pustyLabel1);
+		panelPunktow.add(pustyLabel2);
+		panelPunktow.add(pustyLabel3);
+		panelPunktow.add(napisKlikniecia);
+		panelPunktow.add(licznikKlikniec);
 		panelPunktow.add(przyciskMieszanie);
-		panelPunktow.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 	
 		panelGry.add(panelKart, BorderLayout.WEST);
 		panelGry.add(pustyPanel, BorderLayout.CENTER);
@@ -97,14 +105,16 @@ public class Ramka extends JFrame {
 		przyciskMenu.addActionListener(new ActionListener(){
 		     public void actionPerformed(ActionEvent e){
 		    	 sprawdzeniePrzycisku();
+		    	 panelKart.usuwanieKartZPanelu();
 		    	 powrotDoMenu();
 		     }
 		});
 		
 		przyciskMieszanie.addActionListener(new ActionListener(){
 		     public void actionPerformed(ActionEvent e){
+		    	 panelKart.dodawanieKartDoPanelu();
 		    	 stoper.startCzas();
-		    	 przyciskMieszanie.zamorzeniePrzycisku();
+		    	 przyciskMieszanie.zamrozeniePrzycisku();
 		     }
 		});
 		
@@ -163,7 +173,7 @@ public class Ramka extends JFrame {
 		public void sprawdzeniePrzycisku(){
 			if(stoper.sprawdzenieCzyDziala()){
 	    		 stoper.stopCzas();
-		    	 przyciskMieszanie.odmrorzeniePrzycisku();	 
+		    	 przyciskMieszanie.odmrozeniePrzycisku();	 
 	    	 }
 		}
 }

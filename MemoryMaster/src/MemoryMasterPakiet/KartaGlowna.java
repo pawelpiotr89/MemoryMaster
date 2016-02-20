@@ -26,7 +26,7 @@ public abstract class KartaGlowna extends JButton {
 	public KartaGlowna(){
 		setOpaque(true);
 		setBorderPainted(true);
-		setBackground(new Color(0, 148, 255));
+		setBackground(new Color(75, 181, 48));
 		setEnabled(true);
 		setFocusPainted(true);
 		setFont(new Font("Verdana", Font.BOLD, wymiarCzcionkiInteger));
