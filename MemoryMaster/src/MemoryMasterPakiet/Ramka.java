@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 public class Ramka extends JFrame {
 	
@@ -44,6 +45,8 @@ public class Ramka extends JFrame {
 	PustyLabel pustyLabel2 = new PustyLabel();
 	PustyLabel pustyLabel3 = new PustyLabel();
 	
+	Timer timer2;
+	
 	public Ramka(){
 		setPreferredSize(new Dimension(szerokoscRamki, wysokoscRamki));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,6 +74,14 @@ public class Ramka extends JFrame {
 		panelGry.add(pustyPanel, BorderLayout.CENTER);
 		panelGry.add(panelPunktow, BorderLayout.EAST);
 		add(panelMenu);
+		
+		timer2 = new Timer(1, new ActionListener() {
+		    public void actionPerformed(ActionEvent evt) {
+		    	licznikKlikniec.setText("" + panelKart.getLiczbaKlikniec());
+		    }
+		});
+		
+		timer2.start();
 		
 		addMouseListener(new MouseAdapter(){
 	        

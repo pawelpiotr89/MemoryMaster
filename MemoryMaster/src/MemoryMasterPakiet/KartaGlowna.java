@@ -21,7 +21,7 @@ public abstract class KartaGlowna extends JButton{
     final private int szerokoscRamki = screenSize.width;
     final private double wymiarCzcionkiDouble = szerokoscRamki* 0.05;
     final private int wymiarCzcionkiInteger = (int) wymiarCzcionkiDouble;
-    
+  
 	public KartaGlowna(){
 		setOpaque(true);
 		setBorderPainted(true);
@@ -36,7 +36,7 @@ public abstract class KartaGlowna extends JButton{
         public void mousePressed(MouseEvent e){
         	nacisniecieKursora();	
         }
-  
+        
 		@Override
 		public void mouseReleased(MouseEvent e){
 			tworzenieKursora();	

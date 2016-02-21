@@ -4,10 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JLabel;
-import javax.swing.Timer;
 
 public class LicznikKlikniec extends JLabel{
 	
@@ -23,8 +20,6 @@ public class LicznikKlikniec extends JLabel{
     final private double rozmiarCzcionkiDouble = szerokoscRamki / 40;
     final private int rozmiarCzcionkiInteger = (int) rozmiarCzcionkiDouble;
     
-	private int liczbaKlikniec = 0;
-	
 	public LicznikKlikniec(){
 		setForeground(Color.WHITE);
 		setBackground(new Color(0, 148, 255));
@@ -32,18 +27,6 @@ public class LicznikKlikniec extends JLabel{
 		setFont(new Font("Tahoma", Font.BOLD, rozmiarCzcionkiInteger));
 		setOpaque(true);
 		setHorizontalAlignment(CENTER);
+		setText("0");
 	}
-	
-	public void ustawinieLiczbyKlikniec(){
-		setKlikniecie();
-
-	}
-
-		public int getLiczbaKlikniec(){
-			return liczbaKlikniec;
-		}
-		
-		public void setKlikniecie(){
-			this.liczbaKlikniec++;
-		}
 }

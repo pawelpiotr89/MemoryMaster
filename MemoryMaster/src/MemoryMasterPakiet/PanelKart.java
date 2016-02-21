@@ -24,7 +24,7 @@ public class PanelKart extends JPanel{
     final private double odstepPoziomyDouble = szerokoscRamki * 0.005;
     final private int odstepPoziomyInteger = (int) odstepPoziomyDouble;
     
-    LicznikKlikniec licznikKlikniec = new LicznikKlikniec();
+    private int liczbaKlikniec = 0;
     
     KartaPierwsza kartaPierwsza = new KartaPierwsza();
     KartaPierwsza kartaPierwszaBis = new KartaPierwsza();
@@ -47,14 +47,13 @@ public class PanelKart extends JPanel{
 		setPreferredSize(new Dimension(szerokoscPaneluKartInteger, wysokoscRamki));
 		setLayout(new GridLayout(6,8, odstepPoziomyInteger, odstepPionowyInteger));
 		setBackground(Color.WHITE);
-		
 	}
 	
 	public void dodawanieKartDoPanelu(){
 		dodanieKartDoZbioru();
 		wymieszaniePozycjiKart();
 		wybieranieOrazUstawianieKart();
-		dodawanieSluchaczyDoKart();
+		dodawanieSluchaczy();
 		odmalowaniePanelu();
 	}
 	
@@ -90,15 +89,18 @@ public class PanelKart extends JPanel{
 			}
 		}
 		
-		public void dodawanieSluchaczyDoKart(){
+		public void dodawanieSluchaczy(){	
 			for(int i = 0; i < zbiorKart.size(); i++){
-			zbiorKart.get(i).addActionListener(new ActionListener() {
-				@Override
-	            public void actionPerformed(ActionEvent e){
-	                licznikKlikniec.ustawinieLiczbyKlikniec();
-	            }
-	        });
-			}
+				zbiorKart.get(i).addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent evt) {
+						liczbaKlikniec++;
+					}
+				});
+			};
+		}
+		
+		public void dodawaniesluchaczyDoKart(){
+			
 		}
 		
 		public void uswanieKart(){
@@ -116,5 +118,9 @@ public class PanelKart extends JPanel{
 		
 			public void odmalowanie(){
 				this.repaint();
+			}
+			
+			public int getLiczbaKlikniec(){
+				return liczbaKlikniec;
 			}
 }
