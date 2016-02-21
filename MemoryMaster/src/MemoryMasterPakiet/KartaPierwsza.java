@@ -1,6 +1,6 @@
 package MemoryMasterPakiet;
 
-public class KartaPierwsza extends KartaGlowna {
+public class KartaPierwsza extends KartaGlowna{
 	
 	public KartaPierwsza(){
 	}

@@ -81,7 +81,7 @@ public class Ramka extends JFrame {
 	        
 	        @Override
 	        public void mousePressed(MouseEvent e){
-	        	nacisniecieKursora();  
+	        	nacisniecieKursora();
 	        }
 	        
 	        @Override
@@ -115,6 +115,7 @@ public class Ramka extends JFrame {
 		    	 panelKart.dodawanieKartDoPanelu();
 		    	 stoper.startCzas();
 		    	 przyciskMieszanie.zamrozeniePrzycisku();
+		    	 
 		     }
 		});
 		

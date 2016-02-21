@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
-public class LicznikKlikniec extends JLabel {
+public class LicznikKlikniec extends JLabel{
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
@@ -30,18 +32,18 @@ public class LicznikKlikniec extends JLabel {
 		setFont(new Font("Tahoma", Font.BOLD, rozmiarCzcionkiInteger));
 		setOpaque(true);
 		setHorizontalAlignment(CENTER);
-		setText("" + getLiczbaKlikniec() + "");
 	}
 	
-	public int getLiczbaKlikniec(){
-		return liczbaKlikniec;
+	public void ustawinieLiczbyKlikniec(){
+		setKlikniecie();
+
 	}
-	
-	public void setKlikniecie(){
-		this.liczbaKlikniec++;
-	}
-	
-	public void resetujLiczbeKlikniec(){
-		this.liczbaKlikniec = 0;
-	}
+
+		public int getLiczbaKlikniec(){
+			return liczbaKlikniec;
+		}
+		
+		public void setKlikniecie(){
+			this.liczbaKlikniec++;
+		}
 }

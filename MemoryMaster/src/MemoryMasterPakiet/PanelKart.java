@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JPanel;
 
-public class PanelKart extends JPanel {
+public class PanelKart extends JPanel{
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
@@ -21,6 +23,8 @@ public class PanelKart extends JPanel {
     final private int odstepPionowyInteger = (int) odstepPionowyDouble;
     final private double odstepPoziomyDouble = szerokoscRamki * 0.005;
     final private int odstepPoziomyInteger = (int) odstepPoziomyDouble;
+    
+    LicznikKlikniec licznikKlikniec = new LicznikKlikniec();
     
     KartaPierwsza kartaPierwsza = new KartaPierwsza();
     KartaPierwsza kartaPierwszaBis = new KartaPierwsza();
@@ -37,23 +41,26 @@ public class PanelKart extends JPanel {
 	KartaDwunasta kartaDwunasta = new KartaDwunasta();
 	KartaTrzynasta kartaTrzynasta = new KartaTrzynasta();
 	
-	ArrayList<KartaGlowna> zbiorKart = new ArrayList<KartaGlowna>(14);
+	ArrayList<KartaGlowna> zbiorKart = new ArrayList<KartaGlowna>(48);
     
 	public PanelKart(){
 		setPreferredSize(new Dimension(szerokoscPaneluKartInteger, wysokoscRamki));
 		setLayout(new GridLayout(6,8, odstepPoziomyInteger, odstepPionowyInteger));
 		setBackground(Color.WHITE);
+		
 	}
 	
 	public void dodawanieKartDoPanelu(){
 		dodanieKartDoZbioru();
 		wymieszaniePozycjiKart();
 		wybieranieOrazUstawianieKart();
+		dodawanieSluchaczyDoKart();
 		odmalowaniePanelu();
 	}
 	
 	public void usuwanieKartZPanelu(){
 		uswanieKart();
+		rewalidacja();
 	}
 	
 		public void dodanieKartDoZbioru(){
@@ -79,7 +86,18 @@ public class PanelKart extends JPanel {
 	
 		public void wybieranieOrazUstawianieKart(){
 			for(int i = 0; i < zbiorKart.size(); i++){
-				this.add(zbiorKart.get(i));		
+				this.add(zbiorKart.get(i));
+			}
+		}
+		
+		public void dodawanieSluchaczyDoKart(){
+			for(int i = 0; i < zbiorKart.size(); i++){
+			zbiorKart.get(i).addActionListener(new ActionListener() {
+				@Override
+	            public void actionPerformed(ActionEvent e){
+	                licznikKlikniec.ustawinieLiczbyKlikniec();
+	            }
+	        });
 			}
 		}
 		
@@ -93,10 +111,10 @@ public class PanelKart extends JPanel {
 		}
 		
 			public void rewalidacja(){
-			this.revalidate();
+				this.revalidate();
 			}
 		
 			public void odmalowanie(){
-			this.repaint();
+				this.repaint();
 			}
 }

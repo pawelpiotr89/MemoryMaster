@@ -9,10 +9,9 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JButton;
 
-public abstract class KartaGlowna extends JButton {
+public abstract class KartaGlowna extends JButton{
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
@@ -22,7 +21,7 @@ public abstract class KartaGlowna extends JButton {
     final private int szerokoscRamki = screenSize.width;
     final private double wymiarCzcionkiDouble = szerokoscRamki* 0.05;
     final private int wymiarCzcionkiInteger = (int) wymiarCzcionkiDouble;
-   
+    
 	public KartaGlowna(){
 		setOpaque(true);
 		setBorderPainted(true);
