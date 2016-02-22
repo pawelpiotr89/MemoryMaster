@@ -8,9 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PanelKart extends JPanel{
+public class PanelKart extends JPanel implements Runnable, ActionListener{
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
@@ -25,6 +26,9 @@ public class PanelKart extends JPanel{
     final private int odstepPoziomyInteger = (int) odstepPoziomyDouble;
     
     private int liczbaKlikniec = 0;
+    private boolean wartoscSluchacza = true;
+    private int liczbaWybranychKart = 0;
+    private int liczbaZnalezionychPar = 48;
     
     KartaPierwsza kartaPierwsza = new KartaPierwsza();
     KartaPierwsza kartaPierwszaBis = new KartaPierwsza();
@@ -42,18 +46,25 @@ public class PanelKart extends JPanel{
 	KartaTrzynasta kartaTrzynasta = new KartaTrzynasta();
 	
 	ArrayList<KartaGlowna> zbiorKart = new ArrayList<KartaGlowna>(48);
+	
+	Thread watek = new Thread(this);
+	
+	JButton klon1 = new JButton();
+	JButton klon2 = new JButton();
     
 	public PanelKart(){
 		setPreferredSize(new Dimension(szerokoscPaneluKartInteger, wysokoscRamki));
 		setLayout(new GridLayout(6,8, odstepPoziomyInteger, odstepPionowyInteger));
 		setBackground(Color.WHITE);
+		dodanieKartDoZbioru();
+		
+		watek.start();
 	}
 	
 	public void dodawanieKartDoPanelu(){
-		dodanieKartDoZbioru();
 		wymieszaniePozycjiKart();
 		wybieranieOrazUstawianieKart();
-		dodawanieSluchaczy();
+		dodanieSluchaczy();
 		odmalowaniePanelu();
 	}
 	
@@ -89,38 +100,123 @@ public class PanelKart extends JPanel{
 			}
 		}
 		
-		public void dodawanieSluchaczy(){	
+		public void dodanieSluchaczy(){
+			if(wartoscSluchacza == true){
+				wartoscSluchacza = false;
 			for(int i = 0; i < zbiorKart.size(); i++){
-				zbiorKart.get(i).addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent evt) {
-						liczbaKlikniec++;
+				zbiorKart.get(i).addActionListener(this);
+			}
+			}
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == kartaPierwsza){
+				akcjaKartaPierwsza();
+			}
+			
+			if(e.getSource() == kartaPierwszaBis){
+				akcjaKartaPierwszaBis();
+			}
+		}
+		
+		public void run(){
+			while(true){
+				uspienieWatku();
+				porownaniePierwszychKart();
+				
+				}	
+		}	
+		
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+				public void uswanieKart(){
+					this.removeAll();
 					}
-				});
-			};
-		}
-		
-		public void dodawaniesluchaczyDoKart(){
 			
-		}
-		
-		public void uswanieKart(){
-			this.removeAll();		
-			}
-		
-		public void odmalowaniePanelu(){
-			rewalidacja();
-			odmalowanie();
-		}
-		
-			public void rewalidacja(){
-				this.revalidate();
-			}
-		
-			public void odmalowanie(){
-				this.repaint();
-			}
+				public void odmalowaniePanelu(){
+					rewalidacja();
+					odmalowanie();
+				}
 			
-			public int getLiczbaKlikniec(){
-				return liczbaKlikniec;
-			}
-}
+				public void rewalidacja(){
+					this.revalidate();
+				}
+			
+				public void odmalowanie(){
+					this.repaint();
+				}
+			
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+				
+				public void porownaniePierwszychKart(){
+					if(ustawieniaKartaPierwsza() == false && ustawieniaKartaPierwszaBis() == false && pobranieUstawienieWybranejPary() == true){
+						uspienieWatku();
+						kartaPierwsza.zablokowanieKarty();
+						kartaPierwszaBis.zablokowanieKarty();
+						ustawienieWybranejPary();
+						setLiczbaZnalezionychPar();
+						System.out.println(liczbaZnalezionychPar);
+					}
+				}
+				
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++				
+					public void akcjaKartaPierwsza(){
+						dodanieKlikniecia();
+						setLiczbaWybranychKart();
+						kartaPierwsza.wyborTejKarty();
+					}
+					
+					public boolean ustawieniaKartaPierwsza(){
+						return kartaPierwsza.getStanKarty();
+					}
+					
+					public void akcjaKartaPierwszaBis(){
+						dodanieKlikniecia();
+						setLiczbaWybranychKart();
+						kartaPierwszaBis.wyborTejKarty();
+					}
+					
+					public boolean ustawieniaKartaPierwszaBis(){
+						return kartaPierwszaBis.getStanKarty();
+					}
+					
+					public void ustawienieWybranejPary(){
+						kartaPierwsza.setWybranaPara(false);
+					}
+					
+					public boolean pobranieUstawienieWybranejPary(){
+						return kartaPierwsza.getWybranaPara();
+					}
+					
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++					
+						public int getLiczbaKlikniec(){
+							return liczbaKlikniec;
+						}
+						
+						public void dodanieKlikniecia(){
+							liczbaKlikniec++;
+						}
+						
+						public void resetowanieLiczbyKlikniec(int liczbaKlikniec){
+							this.liczbaKlikniec = liczbaKlikniec;
+						}
+						
+						public void setLiczbaWybranychKart(){
+							liczbaWybranychKart++;
+						}
+						
+						public int getLiczbaWybranychKart(){
+							return liczbaWybranychKart;
+						}
+						
+						public void setLiczbaZnalezionychPar(){
+							liczbaZnalezionychPar--;
+						}
+						
+						public void uspienieWatku(){
+							try {
+						        Thread.sleep(1);
+						    } catch (InterruptedException ignore) {
+						    }
+						}
+	}

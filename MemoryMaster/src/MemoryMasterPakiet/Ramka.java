@@ -117,6 +117,7 @@ public class Ramka extends JFrame {
 		     public void actionPerformed(ActionEvent e){
 		    	 sprawdzeniePrzycisku();
 		    	 panelKart.usuwanieKartZPanelu();
+		    	 panelKart.resetowanieLiczbyKlikniec(0);
 		    	 powrotDoMenu();
 		     }
 		});

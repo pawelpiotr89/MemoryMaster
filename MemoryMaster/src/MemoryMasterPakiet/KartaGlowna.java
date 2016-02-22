@@ -27,20 +27,21 @@ public abstract class KartaGlowna extends JButton{
 		setBorderPainted(true);
 		setBackground(new Color(75, 181, 48));
 		setEnabled(true);
-		setFocusPainted(true);
+		setFocusPainted(false);
 		setFont(new Font("Verdana", Font.BOLD, wymiarCzcionkiInteger));
 	
 	addMouseListener(new MouseAdapter(){
 		
-        @Override
         public void mousePressed(MouseEvent e){
         	nacisniecieKursora();	
         }
         
-		@Override
 		public void mouseReleased(MouseEvent e){
 			tworzenieKursora();	
 		}
+			
+		public void mouseClicked(MouseEvent e) {	
+		}	
 	});
 	}
 	
@@ -52,5 +53,21 @@ public abstract class KartaGlowna extends JButton{
 		public void nacisniecieKursora(){
 		Cursor a = tk.createCustomCursor(imagePiescPrzycisk , new Point(), "");
 		setCursor (a);
+		}
+		
+		public void ustawBialeTlo(){
+			setBackground(Color.WHITE);
+		}
+		
+		public void ustawZieloneTlo(){
+			setBackground(new Color(75, 181, 48));
+		}
+		
+		public void zablokowanieKarty(){
+			this.setEnabled(false);
+		}
+		
+		public void odblokowanieKarty(){
+			this.setEnabled(true);
 		}
 }

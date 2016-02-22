@@ -1,12 +1,11 @@
 package MemoryMasterPakiet;
 
-public class KartaPierwsza extends KartaGlowna{
-	
+public class KartaPierwszaBis  extends KartaGlowna {
+
 	private boolean wybranaKarta = true;
 	private String wartoscKartyString = "1";
-	private boolean wybranaPara = true;
 	
-	public KartaPierwsza(){
+	public KartaPierwszaBis(){
 	}
 	
 	public void wyborTejKarty(){
@@ -29,14 +28,6 @@ public class KartaPierwsza extends KartaGlowna{
 	
 	public boolean getStanKarty(){
 		return wybranaKarta;
-	}
-	
-	public void setWybranaPara(boolean wybranaPara){
-		this.wybranaPara = wybranaPara;
-	}
-	
-	public boolean getWybranaPara(){
-		return wybranaPara;
-	}
-	
+	}	
 }
+
