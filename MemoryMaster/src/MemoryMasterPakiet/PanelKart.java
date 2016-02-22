@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class PanelKart extends JPanel implements Runnable, ActionListener{
@@ -27,36 +26,38 @@ public class PanelKart extends JPanel implements Runnable, ActionListener{
     
     private int liczbaKlikniec = 0;
     private boolean wartoscSluchacza = true;
-    private int liczbaWybranychKart = 0;
     private int liczbaZnalezionychPar = 48;
+    private boolean wartoscKlonu1 = false;
+    private boolean wartoscKlonu2 = false;
     
-    KartaPierwsza kartaPierwsza = new KartaPierwsza();
-    KartaPierwsza kartaPierwszaBis = new KartaPierwsza();
-    KartaDruga kartaDruga = new KartaDruga();
-    KartaTrzecia kartaTrzecia = new KartaTrzecia();
-    KartaCzwarta kartaCzwarta = new KartaCzwarta();
-    KartaPiata kartaPiata = new KartaPiata();
-	KartaSzosta kartaSzosta = new KartaSzosta();
-	KartaSiodma kartaSiodma = new KartaSiodma();
-	KartaOsma kartaOsma = new KartaOsma();
-	KartaDziewiata kartaDziewiata = new KartaDziewiata();
-	KartaDziesiata kartaDziesiata = new KartaDziesiata();
-	KartaJedenasta kartaJedenasta = new KartaJedenasta();
-	KartaDwunasta kartaDwunasta = new KartaDwunasta();
-	KartaTrzynasta kartaTrzynasta = new KartaTrzynasta();
+    KartaPodstawowa klon1 = new KartaPodstawowa();
+    KartaPodstawowa klon2 = new KartaPodstawowa();
+    KartaPodstawowa kartaPierwsza = new KartaPodstawowa();
+    KartaPodstawowa kartaPierwszaBis = new KartaPodstawowa();
+    KartaPodstawowa kartaDruga = new KartaPodstawowa();
+    KartaPodstawowa kartaDrugaBis = new KartaPodstawowa();
+    KartaPodstawowa kartaTrzecia = new KartaPodstawowa();
+    KartaPodstawowa kartaCzwarta = new KartaPodstawowa();
+    KartaPodstawowa kartaPiata = new KartaPodstawowa();
+    KartaPodstawowa kartaSzosta = new KartaPodstawowa();
+    KartaPodstawowa kartaSiodma = new KartaPodstawowa();
+    KartaPodstawowa kartaOsma = new KartaPodstawowa();
+    KartaPodstawowa kartaDziewiata = new KartaPodstawowa();
+    KartaPodstawowa kartaDziesiata = new KartaPodstawowa();
+    KartaPodstawowa kartaJedenasta = new KartaPodstawowa();
+    KartaPodstawowa kartaDwunasta = new KartaPodstawowa();
+    KartaPodstawowa kartaTrzynasta = new KartaPodstawowa();
 	
 	ArrayList<KartaGlowna> zbiorKart = new ArrayList<KartaGlowna>(48);
 	
 	Thread watek = new Thread(this);
-	
-	JButton klon1 = new JButton();
-	JButton klon2 = new JButton();
-    
+	  
 	public PanelKart(){
 		setPreferredSize(new Dimension(szerokoscPaneluKartInteger, wysokoscRamki));
 		setLayout(new GridLayout(6,8, odstepPoziomyInteger, odstepPionowyInteger));
 		setBackground(Color.WHITE);
 		dodanieKartDoZbioru();
+		dodanieSluchaczy();
 		
 		watek.start();
 	}
@@ -64,7 +65,6 @@ public class PanelKart extends JPanel implements Runnable, ActionListener{
 	public void dodawanieKartDoPanelu(){
 		wymieszaniePozycjiKart();
 		wybieranieOrazUstawianieKart();
-		dodanieSluchaczy();
 		odmalowaniePanelu();
 	}
 	
@@ -77,6 +77,7 @@ public class PanelKart extends JPanel implements Runnable, ActionListener{
 			zbiorKart.add(kartaPierwsza);
 			zbiorKart.add(kartaPierwszaBis);
 			zbiorKart.add(kartaDruga);
+			zbiorKart.add(kartaDrugaBis);
 			zbiorKart.add(kartaTrzecia);
 			zbiorKart.add(kartaCzwarta);
 			zbiorKart.add(kartaPiata);
@@ -96,6 +97,10 @@ public class PanelKart extends JPanel implements Runnable, ActionListener{
 	
 		public void wybieranieOrazUstawianieKart(){
 			for(int i = 0; i < zbiorKart.size(); i++){
+				wyzerowanieZnalezionychPar(48);
+				(zbiorKart.get(i)).setEnabled(true);
+				(zbiorKart.get(i)).setBackground(new Color(75, 181, 48));
+				(zbiorKart.get(i)).setText("");
 				this.add(zbiorKart.get(i));
 			}
 		}
@@ -112,111 +117,214 @@ public class PanelKart extends JPanel implements Runnable, ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == kartaPierwsza){
-				akcjaKartaPierwsza();
+				klonowanieKartyPierwszej();
 			}
 			
 			if(e.getSource() == kartaPierwszaBis){
-				akcjaKartaPierwszaBis();
+				klonowanieKartyPierwszejBis();
+			}
+			
+			if(e.getSource() == kartaDruga){
+				klonowanieKartyDrugiej();
+			}
+			if(e.getSource() == kartaDrugaBis){
+				klonowanieKartyDrugiejBis();
 			}
 		}
 		
-		public void run(){
-			while(true){
-				uspienieWatku();
-				porownaniePierwszychKart();
-				
-				}	
-		}	
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			public void klonowanieKartyPierwszej(){
+				if(wartoscKlonu1 == false){
+					kartaPierwsza.ustawTekst("1");
+					kartaPierwsza.ustawNumerKarty(1);
+					wartoscKlonu1 = true;
+					klon1 = kartaPierwsza;
+					akcjaKlon1();
+				}
+				else if(wartoscKlonu1 == true && wartoscKlonu2 == false){
+					kartaPierwsza.ustawTekst("1");
+					kartaPierwsza.ustawNumerKarty(1);
+					wartoscKlonu2 = true;
+					klon2 = kartaPierwsza;
+					akcjaKlon2();
+				}
+			}	
+			
+			public void klonowanieKartyPierwszejBis(){
+				if(wartoscKlonu1 == false){
+					kartaPierwszaBis.ustawTekst("1");
+					kartaPierwszaBis.ustawNumerKarty(1);
+					wartoscKlonu1 = true;
+					klon1 = kartaPierwszaBis;
+					akcjaKlon1();
+				}
+				else if(wartoscKlonu1 == true && wartoscKlonu2 == false){
+					kartaPierwszaBis.ustawTekst("1");
+					kartaPierwszaBis.ustawNumerKarty(1);
+					wartoscKlonu2 = true;
+					klon2 = kartaPierwszaBis;
+					akcjaKlon2();
+				}
+			}
+			
+			public void klonowanieKartyDrugiej(){
+				if(wartoscKlonu1 == false){
+					kartaDruga.ustawTekst("2");
+					kartaDruga.ustawNumerKarty(2);
+					wartoscKlonu1 = true;
+					klon1 = kartaDruga;
+					akcjaKlon1();
+				}
+				else if(wartoscKlonu1 == true && wartoscKlonu2 == false){
+					kartaDruga.ustawTekst("2");
+					kartaDruga.ustawNumerKarty(2);
+					wartoscKlonu2 = true;
+					klon2 = kartaDruga;
+					akcjaKlon2();
+				}
+			}
+			
+			public void klonowanieKartyDrugiejBis(){
+				if(wartoscKlonu1 == false){
+					kartaDrugaBis.ustawTekst("2");
+					kartaDrugaBis.ustawNumerKarty(2);
+					wartoscKlonu1 = true;
+					klon1 = kartaDrugaBis;
+					akcjaKlon1();
+				}
+				else if(wartoscKlonu1 == true && wartoscKlonu2 == false){
+					kartaDrugaBis.ustawTekst("2");
+					kartaDrugaBis.ustawNumerKarty(2);
+					wartoscKlonu2 = true;
+					klon2 = kartaDrugaBis;
+					akcjaKlon2();
+				}
+			}
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			public void run(){
+				while(true){
+					uspienieWatku1();
+					porownanieKartKlonow();
+					}	
+			}
+		
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+				public void porownanieKartKlonow(){
+					if(ustawieniaKlon1() == ustawieniaKlon2() && wartoscKlonu1 == true && wartoscKlonu2 == true){
+						wartoscKlonu1 = false;
+						wartoscKlonu2 = false;
+						klon1.zablokowanieKarty();
+						klon2.zablokowanieKarty();
+						klon1.ustawNumerKarty(100);
+						klon2.ustawNumerKarty(101);
+						dodanieKlikniecia();
+						dodanieKlikniecia();
+						setLiczbaZnalezionychPar();
+					}
+					
+					 else if(ustawieniaKlon1() != ustawieniaKlon2() && wartoscKlonu1 == true && wartoscKlonu2 == true){
+						uspienieWatku2();
+						wartoscKlonu1 = false;
+						wartoscKlonu2 = false;
+						klon1.ustawTekst("");
+						klon2.ustawTekst("");
+						klon1.ustawZieloneTlo();
+						klon2.ustawZieloneTlo();
+						klon1.odblokowanieKarty();
+						klon2.odblokowanieKarty();
+						dodanieKlikniecia();
+						dodanieKlikniecia();
+					}
+				}
 		
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
-				public void uswanieKart(){
-					this.removeAll();
-					}
-			
-				public void odmalowaniePanelu(){
-					rewalidacja();
-					odmalowanie();
-				}
-			
-				public void rewalidacja(){
-					this.revalidate();
-				}
-			
-				public void odmalowanie(){
-					this.repaint();
-				}
-			
+						public void uswanieKart(){
+							this.removeAll();
+							}
+					
+						public void odmalowaniePanelu(){
+							rewalidacja();
+							odmalowanie();
+						}
+					
+						public void rewalidacja(){
+							this.revalidate();
+						}
+					
+						public void odmalowanie(){
+							this.repaint();
+						}
+				
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-				
-				public void porownaniePierwszychKart(){
-					if(ustawieniaKartaPierwsza() == false && ustawieniaKartaPierwszaBis() == false && pobranieUstawienieWybranejPary() == true){
-						uspienieWatku();
-						kartaPierwsza.zablokowanieKarty();
-						kartaPierwszaBis.zablokowanieKarty();
-						ustawienieWybranejPary();
-						setLiczbaZnalezionychPar();
-						System.out.println(liczbaZnalezionychPar);
-					}
-				}
-				
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++				
-					public void akcjaKartaPierwsza(){
-						dodanieKlikniecia();
-						setLiczbaWybranychKart();
-						kartaPierwsza.wyborTejKarty();
-					}
-					
-					public boolean ustawieniaKartaPierwsza(){
-						return kartaPierwsza.getStanKarty();
-					}
-					
-					public void akcjaKartaPierwszaBis(){
-						dodanieKlikniecia();
-						setLiczbaWybranychKart();
-						kartaPierwszaBis.wyborTejKarty();
-					}
-					
-					public boolean ustawieniaKartaPierwszaBis(){
-						return kartaPierwszaBis.getStanKarty();
-					}
-					
-					public void ustawienieWybranejPary(){
-						kartaPierwsza.setWybranaPara(false);
-					}
-					
-					public boolean pobranieUstawienieWybranejPary(){
-						return kartaPierwsza.getWybranaPara();
-					}
-					
+						
+							public void akcjaKlon1(){
+								klon1.wyborTejKarty();
+							}
+							
+							public int ustawieniaKlon1(){
+								return klon1.getNumerKarty();
+							}
+							
+							public void akcjaKlon2(){
+								klon2.wyborTejKarty();
+							}
+							
+							public int ustawieniaKlon2(){
+								return klon2.getNumerKarty();
+							}
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++					
-						public int getLiczbaKlikniec(){
-							return liczbaKlikniec;
-						}
-						
-						public void dodanieKlikniecia(){
-							liczbaKlikniec++;
-						}
-						
-						public void resetowanieLiczbyKlikniec(int liczbaKlikniec){
-							this.liczbaKlikniec = liczbaKlikniec;
-						}
-						
-						public void setLiczbaWybranychKart(){
-							liczbaWybranychKart++;
-						}
-						
-						public int getLiczbaWybranychKart(){
-							return liczbaWybranychKart;
-						}
-						
-						public void setLiczbaZnalezionychPar(){
-							liczbaZnalezionychPar--;
-						}
-						
-						public void uspienieWatku(){
-							try {
-						        Thread.sleep(1);
-						    } catch (InterruptedException ignore) {
-						    }
-						}
+								public int getLiczbaKlikniec(){
+									return liczbaKlikniec;
+								}
+								
+								public void dodanieKlikniecia(){
+									liczbaKlikniec++;
+								}
+								
+								public void resetowanieLiczbyKlikniec(int liczbaKlikniec){
+									this.liczbaKlikniec = liczbaKlikniec;
+								}
+								
+								public void setLiczbaZnalezionychPar(){
+									liczbaZnalezionychPar--;
+								}
+								
+								public void wyzerowanieZnalezionychPar(int liczbaZnalezionychPar){
+									this.liczbaZnalezionychPar = liczbaZnalezionychPar;
+								}
+								
+								public int getLiczbaZnalezionychPar(){
+									return liczbaZnalezionychPar;
+								}
+								
+								public void setWartoscKlonu1(boolean wartoscKlonu1){
+									this.wartoscKlonu1 = wartoscKlonu1;
+								}
+								
+								public boolean getWartoscKlonu1(){
+									return wartoscKlonu1;
+								}
+								
+								public void setWartoscKlonu2(boolean wartoscKlonu2){
+									this.wartoscKlonu2 = wartoscKlonu2;
+								}
+								
+								public boolean getWartoscKlonu2(){
+									return wartoscKlonu2;
+								}
+								
+								public void uspienieWatku1(){
+									try {
+								        Thread.sleep(1);
+								    } catch (InterruptedException ignore) {
+								    }
+								}
+								
+								public void uspienieWatku2(){
+									try {
+								        Thread.sleep(750);
+								    } catch (InterruptedException ignore) {
+								    }
+								}
 	}
