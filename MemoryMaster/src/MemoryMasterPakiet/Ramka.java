@@ -10,8 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class Ramka extends JFrame {
@@ -27,48 +32,61 @@ public class Ramka extends JFrame {
     final private int odstepRamkiInteger = (int) odstepRamkiDouble;
     final private double odstepPrzyciskuDouble = szerokoscRamki/40;
     final private int odstepPrzyciskuInteger = (int) odstepPrzyciskuDouble;
+    
+    private double score = 0;
   
     PrzyciskStart przyciskStart = new PrzyciskStart();
 	PrzyciskExit przyciskExit = new PrzyciskExit();
 	PrzyciskMenu przyciskMenu = new PrzyciskMenu();
+	PrzyciskWyniki przyciskWyniki = new PrzyciskWyniki();
 	PrzyciskMieszanie przyciskMieszanie = new PrzyciskMieszanie();
+	PrzyciskScorePowrot przyciskScorePowrot = new PrzyciskScorePowrot();
 	PanelMenu panelMenu = new PanelMenu();
 	PanelGry panelGry = new PanelGry();
 	PanelKart panelKart = new PanelKart();
 	PanelPunktow panelPunktow = new PanelPunktow();
+	PanelWynikow panelWynikow = new PanelWynikow();
 	PustyPanel pustyPanel = new PustyPanel();
 	NapisCzas napisCzas = new NapisCzas();
 	Stoper stoper = new Stoper();
 	NapisKlikniecia napisKlikniecia = new NapisKlikniecia();
 	LicznikKlikniec licznikKlikniec = new LicznikKlikniec();
-	PustyLabel pustyLabel1 = new PustyLabel();
-	PustyLabel pustyLabel2 = new PustyLabel();
-	PustyLabel pustyLabel3 = new PustyLabel();
+	LabelWyniku labelWyniku = new LabelWyniku();
+	WynikKoncowy wynikKoncowy = new WynikKoncowy();
 	
 	Timer timer2;
+	
+	String tekst = "";
+	String stringToTXT = "";
+	String stringOstateczny = "";
 	
 	public Ramka(){
 		setPreferredSize(new Dimension(szerokoscRamki, wysokoscRamki));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setAlwaysOnTop(true);
+		setAlwaysOnTop(false);
 		setTitle("Memory_Master");
 		setUndecorated(true);
 		
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepRamkiInteger)));
 		panelMenu.add(przyciskStart);
 		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
+		panelMenu.add(przyciskWyniki);
+		panelMenu.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
 		panelMenu.add(przyciskExit);
 		
 		panelPunktow.add(przyciskMenu);
 		panelPunktow.add(napisCzas);
 		panelPunktow.add(stoper);
-		panelPunktow.add(pustyLabel1);
-		panelPunktow.add(pustyLabel2);
-		panelPunktow.add(pustyLabel3);
+		panelPunktow.add(labelWyniku);
+		panelPunktow.add(wynikKoncowy);
 		panelPunktow.add(napisKlikniecia);
 		panelPunktow.add(licznikKlikniec);
 		panelPunktow.add(przyciskMieszanie);
+		
+		panelWynikow.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
+		panelWynikow.add(przyciskScorePowrot);
+		panelWynikow.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
 	
 		panelGry.add(panelKart, BorderLayout.WEST);
 		panelGry.add(pustyPanel, BorderLayout.CENTER);
@@ -77,11 +95,19 @@ public class Ramka extends JFrame {
 		
 		timer2 = new Timer(1, new ActionListener() {
 		    public void actionPerformed(ActionEvent evt) {
-		    	licznikKlikniec.setText("" + panelKart.getLiczbaKlikniec());
+		    	licznikKlikniec.setText("" + panelKart.getLiczbaProb());
+		    	wynikKoncowy.setText(obliczWynikKoncowy() + "");
+		    		if(panelKart.getKoniecGry() == true && stoper.sprawdzenieCzyDziala() == true){
+		    			stoper.stopTimer();
+		    			stoper.stopStoper();
+		    				tekst = JOptionPane.showInputDialog("Congratulations_you_scored_" + wartoscPunktowDoString() + "_points._Set_your_nick/name.");
+		    				operacjeNaOkienku();
+		    			removeStart();
+		    		}
 		    }
 		});
 		
-		timer2.start();
+		
 		
 		addMouseListener(new MouseAdapter(){
 	        
@@ -103,7 +129,30 @@ public class Ramka extends JFrame {
 		
 		przyciskStart.addActionListener(new ActionListener(){
 		     public void actionPerformed(ActionEvent e){
+		    	 if(!timer2.isRunning()){
+		    		 timer2.start();
+		    	 }
 		    	 startMemoryMaster();
+		    	 
+		    	 if(!przyciskMieszanie.isEnabled()){
+		    		 przyciskMieszanie.setEnabled(true);
+		    	 }
+		     }
+		});
+		
+		przyciskWyniki.addActionListener(new ActionListener(){
+		     public void actionPerformed(ActionEvent e){
+		    	 usunieciePaneluMenu();
+		    	 dodaniePaneluWynikow();
+		    	 czyszczeniePanelu();
+		     }
+		});
+		
+		przyciskScorePowrot.addActionListener(new ActionListener(){
+		     public void actionPerformed(ActionEvent e){
+		    	 usunieciePaneluWynikow();
+		    	 dodaniePaneluMenu();
+		    	 czyszczeniePanelu();
 		     }
 		});
 		
@@ -117,8 +166,13 @@ public class Ramka extends JFrame {
 		     public void actionPerformed(ActionEvent e){
 		    	 sprawdzeniePrzycisku();
 		    	 panelKart.usuwanieKartZPanelu();
-		    	 panelKart.resetowanieLiczbyKlikniec(0);
 		    	 powrotDoMenu();
+		    	 if(timer2.isRunning()){
+		    		 timer2.stop();
+		    	 }
+		    	 panelKart.wyzerowanieZnalezionychPar(0);
+		    	 panelKart.resetowanieLiczbyProb(0);
+		    	 stoper.resetStoper();
 		     }
 		});
 		
@@ -127,7 +181,6 @@ public class Ramka extends JFrame {
 		    	 panelKart.dodawanieKartDoPanelu();
 		    	 stoper.startCzas();
 		    	 przyciskMieszanie.zamrozeniePrzycisku();
-		    	 
 		     }
 		});
 		
@@ -162,6 +215,11 @@ public class Ramka extends JFrame {
 		czyszczeniePanelu();
 	}
 	
+	public void removeStart(){
+		usunieciePrzyciskuStart();
+		czyszczeniePanelu();
+	}
+	
 		public void usunieciePaneluMenu(){
 			remove(panelMenu);
 		}
@@ -172,6 +230,14 @@ public class Ramka extends JFrame {
 		
 		public void usunieciePaneluGry(){
 			remove(panelGry);
+		}
+		
+		public void dodaniePaneluWynikow(){
+			add(panelWynikow);
+		}
+		
+		public void usunieciePaneluWynikow(){
+			remove(panelWynikow);
 		}
 		
 		public void dodaniePaneluMenu(){
@@ -188,5 +254,41 @@ public class Ramka extends JFrame {
 	    		 stoper.stopCzas();
 		    	 przyciskMieszanie.odmrozeniePrzycisku();	 
 	    	 }
+		}
+		
+		public String wartoscPunktowDoString(){
+			return String.valueOf(obliczWynikKoncowy());
+		}
+		
+		public int obliczWynikKoncowy(){
+			return (int) (score = (stoper.pobierzCzasKtoryUplynal() * panelKart.getLiczbaProb()));
+		}
+		
+		public void usunieciePrzyciskuStart(){
+			panelMenu.remove(przyciskStart);
+		}
+		
+		public void operacjeNaOkienku(){
+			if (tekst == null){
+			}
+			else{
+				try{
+					BufferedWriter writer = new BufferedWriter(new FileWriter("src\\MemoryMasterPakiet\\wyniki.txt", true));
+					writer.newLine();
+					writer.write(stringOstateczny());
+					writer.close();
+				}
+				catch(IOException e){
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		public String stringOstateczny(){
+			return stringOstateczny =(ustawienieStringaDoTextu()+ " " + tekst);
+		}
+		
+		public String ustawienieStringaDoTextu(){
+			return stringToTXT = String.valueOf(obliczWynikKoncowy());
 		}
 }

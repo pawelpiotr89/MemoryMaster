@@ -7,7 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JLabel;
 
-public class NapisKlikniecia extends JLabel {
+public class LabelWyniku extends JLabel {
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
@@ -21,13 +21,14 @@ public class NapisKlikniecia extends JLabel {
     final private double rozmiarCzcionkiDouble = szerokoscRamki / 50;
     final private int rozmiarCzcionkiInteger = (int) rozmiarCzcionkiDouble;
 	
-	public NapisKlikniecia(){
-		setForeground(Color.WHITE);
-		setBackground(new Color(0, 148, 255));
+	public LabelWyniku(){
+		setForeground(new Color(0, 148, 255));
+		setBackground(new Color(255, 255, 255));
 		setMaximumSize(new Dimension(szerokoscEtykietyCzasInteger, wysokoscEtykietyCzasInteger));
 		setFont(new Font("Tahoma", Font.BOLD, rozmiarCzcionkiInteger));
 		setOpaque(true);
 		setHorizontalAlignment(CENTER);
-		setText("Attempts_number:");
+		setText("Your_Score:");
 	}
 }
+

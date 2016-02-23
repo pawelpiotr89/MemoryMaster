@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
@@ -86,7 +88,9 @@ public class Stoper extends JLabel{
 		}
 		
 		public void splitStoper(){
-			stopWatch.split();
+			if(stopWatch.isStarted()){
+				stopWatch.split();
+			}	
 		}
 		
 		public void wyzerowanieZegara(){
@@ -95,5 +99,17 @@ public class Stoper extends JLabel{
 		
 		public boolean sprawdzenieCzyDziala(){
 			return stopWatch.isStarted();
+		}
+		
+		public long pobierzNanoCzas(){
+			return stopWatch.getNanoTime();
+		}
+		
+		public long przeliczNanoNaSekundy(){
+			return TimeUnit.NANOSECONDS.toSeconds(pobierzNanoCzas());
+		}
+		
+		public double pobierzCzasKtoryUplynal(){
+			return przeliczNanoNaSekundy();
 		}
 }
