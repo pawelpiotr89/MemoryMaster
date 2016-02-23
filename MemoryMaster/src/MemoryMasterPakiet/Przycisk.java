@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 
 import javax.swing.JButton;
 
@@ -16,8 +17,12 @@ public abstract class Przycisk extends JButton {
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
-    Image imagePalecPrzycisk = tk.getImage("src\\MemoryMasterPakiet\\kursor1.png");
-	Image imagePiescPrzycisk = tk.getImage("src\\MemoryMasterPakiet\\kursor2.png");
+    
+    URL palec = Ramka.class.getResource("kursor1.png");
+    URL piesc = Ramka.class.getResource("kursor2.png");
+    
+    Image imagePalec = tk.getImage(palec);
+	Image imagePiesc = tk.getImage(piesc);
 	
     final private int szerokoscEkranu = screenSize.width;
     final private int wysokoscEkranu = screenSize.height;
@@ -70,12 +75,12 @@ public abstract class Przycisk extends JButton {
 	}
 	
 	public void tworzenieKursora(){
-		Cursor a = tk.createCustomCursor(imagePalecPrzycisk , new Point(), "");
+		Cursor a = tk.createCustomCursor(imagePalec , new Point(), "");
     	setCursor (a);
 	}
 	
 	public void nacisniecieKursora(){
-    	Cursor a = tk.createCustomCursor(imagePiescPrzycisk , new Point(), "");
+    	Cursor a = tk.createCustomCursor(imagePiesc , new Point(), "");
     	setCursor (a);
 	}
 }

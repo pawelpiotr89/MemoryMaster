@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.net.URL;
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -23,8 +23,12 @@ public class Ramka extends JFrame {
 	
 	Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension screenSize = tk.getScreenSize();
-    Image imagePalec = tk.getImage("src\\MemoryMasterPakiet\\kursor1.png");
-	Image imagePiesc = tk.getImage("src\\MemoryMasterPakiet\\kursor2.png");
+    
+    URL palec = Ramka.class.getResource("kursor1.png");
+    URL piesc = Ramka.class.getResource("kursor2.png");
+    
+    Image imagePalec = tk.getImage(palec);
+	Image imagePiesc = tk.getImage(piesc);
 	
     final private int szerokoscRamki = screenSize.width;
     final private int wysokoscRamki = screenSize.height;
