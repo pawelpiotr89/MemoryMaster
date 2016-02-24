@@ -97,6 +97,10 @@ public class Stoper extends JLabel{
 			setText("00:00:00.000");
 		}
 		
+		public String pobranieDoStringa(){
+			return stopWatch.toSplitString();
+		}
+		
 		public boolean sprawdzenieCzyDziala(){
 			return stopWatch.isStarted();
 		}

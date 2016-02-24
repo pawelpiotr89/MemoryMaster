@@ -10,12 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.Box;
+import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -37,6 +37,12 @@ public class Ramka extends JFrame {
     final private int odstepRamkiInteger = (int) odstepRamkiDouble;
     final private double odstepPrzyciskuDouble = szerokoscRamki/40;
     final private int odstepPrzyciskuInteger = (int) odstepPrzyciskuDouble;
+    final private double odstepSzerokoscDouble = szerokoscRamki * 0.35;
+    final private int odstepSzerokoscInteger = (int) odstepSzerokoscDouble;
+    final private double odstepWysokoscDouble = wysokoscRamki * 0.05;
+    final private int odstepWysokoscInteger = (int) odstepWysokoscDouble;
+    final private double szerekoscElementowDouble = szerokoscRamki * 0.30;
+    final private int szerokoscElementowInteger =  (int) szerekoscElementowDouble;
     
     private double score = 0;
   
@@ -58,6 +64,9 @@ public class Ramka extends JFrame {
 	LicznikKlikniec licznikKlikniec = new LicznikKlikniec();
 	LabelWyniku labelWyniku = new LabelWyniku();
 	WynikKoncowy wynikKoncowy = new WynikKoncowy();
+	ListaWynikow listaWynikow = new ListaWynikow();
+	
+	ArrayList<String> wykazWynikow = new ArrayList<String>();
 	
 	Timer timer2;
 	
@@ -90,8 +99,11 @@ public class Ramka extends JFrame {
 		panelPunktow.add(przyciskMieszanie);
 		
 		panelWynikow.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
+		przyciskScorePowrot.setBounds(odstepSzerokoscInteger, odstepWysokoscInteger, szerokoscElementowInteger, 100);
 		panelWynikow.add(przyciskScorePowrot);
 		panelWynikow.add(Box.createRigidArea(new Dimension(1, odstepPrzyciskuInteger)));
+		listaWynikow.setBounds(odstepSzerokoscInteger, (odstepWysokoscInteger + 150), szerokoscElementowInteger, 60);
+		panelWynikow.add(listaWynikow);
 	
 		panelGry.add(panelKart, BorderLayout.WEST);
 		panelGry.add(pustyPanel, BorderLayout.CENTER);
@@ -277,20 +289,26 @@ public class Ramka extends JFrame {
 			if (tekst == null){
 			}
 			else{
-				try{
-					BufferedWriter writer = new BufferedWriter(new FileWriter("src\\MemoryMasterPakiet\\wyniki.txt", true));
-					writer.newLine();
-					writer.write(stringOstateczny());
-					writer.close();
-				}
-				catch(IOException e){
-					e.printStackTrace();
-				}
+				wykazWynikow.add(stringOstateczny());
+				posortowanieWynikow();
 			}
 		}
 		
+		public void posortowanieWynikow(){
+			Collections.sort(wykazWynikow);
+			if(wykazWynikow.size() > 10){
+				for(int i = 10; i < wykazWynikow.size(); i++){
+					wykazWynikow.remove(i);
+				}
+			}	
+		}
+		
+		public void pobranieWynikowNaListe(){
+			listaWynikow.setModel(new javax.swing.DefaultComboBoxModel(wykazWynikow.toArray()));
+		}
+	
 		public String stringOstateczny(){
-			return stringOstateczny =(ustawienieStringaDoTextu()+ " " + tekst);
+			return stringOstateczny =(ustawienieStringaDoTextu() + " " + stoper.pobranieDoStringa() + " " + tekst);
 		}
 		
 		public String ustawienieStringaDoTextu(){
