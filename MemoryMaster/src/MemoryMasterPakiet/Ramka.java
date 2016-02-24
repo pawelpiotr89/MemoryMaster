@@ -291,6 +291,7 @@ public class Ramka extends JFrame {
 			else{
 				wykazWynikow.add(stringOstateczny());
 				posortowanieWynikow();
+				pobranieWynikowNaListe();
 			}
 		}
 		
